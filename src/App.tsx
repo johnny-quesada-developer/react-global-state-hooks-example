@@ -9,7 +9,7 @@ const App = () => {
         React Global State Hooks vs React Context
       </h1>
 
-      <div className='flex flex-col gap-10'>
+      <div className='flex flex-col md:grid lg:grid grid-cols-2 md:px-20 lg:px-20 gap-10'>
         <SimpleContext />
 
         <SimpleStorage />
