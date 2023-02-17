@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
-import { Collapsible } from './Collapsible';
+import { Collapsible } from '../fixtures/Collapsible';
 
 const CountContext = createContext({
   count: 0,

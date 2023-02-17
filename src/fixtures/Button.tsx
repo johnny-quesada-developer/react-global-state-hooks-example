@@ -10,7 +10,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
 }) => {
   return (
     <button
-      className='h-8 px-2.5 rounded-md text-white bg-blue-400 flex justify-center items-center'
+      className='h-8 px-2 rounded-md text-white bg-blue-400 flex justify-center items-center cursor-pointer hover:bg-blue-500'
       onClick={onClick}
     >
       {children}

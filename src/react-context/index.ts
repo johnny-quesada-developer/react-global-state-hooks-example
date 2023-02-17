@@ -1,3 +1,3 @@
 export * from './SimpleContext';
 export * from './CustomActions';
-export * from './Collapsible';
+export * from '../fixtures/Collapsible';

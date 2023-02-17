@@ -28,7 +28,7 @@ export const StateDetails: React.FC<PropsWithChildren<StateDetailsProps>> = ({
         <strong>Value:</strong>
       </label>
 
-      <label className='text-right'>{count}</label>
+      <label className='text-right'>{count ?? '_'}</label>
 
       <label className='block'>
         <strong>Renders:</strong>

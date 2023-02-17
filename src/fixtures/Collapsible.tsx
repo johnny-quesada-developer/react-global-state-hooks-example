@@ -11,7 +11,7 @@ export const Collapsible: React.FC<PropsWithChildren<CollapsibleProps>> = ({
   return (
     <details className='flex-1'>
       <summary className='flex justify-between items-center mb-2'>
-        <h2 className='font-bold text-lg text-gray-600 cursor-pointer'>
+        <h2 className='font-bold text-lg  cursor-pointer underline text-blue-500 hover:text-blue-800'>
           {title}
         </h2>
       </summary>

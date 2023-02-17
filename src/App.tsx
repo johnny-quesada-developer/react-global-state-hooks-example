@@ -1,6 +1,6 @@
 // import { ReactGlobalStateHookExample } from './react-global-state-hooks';
-import { SimpleContext } from './react-context';
-import { SimpleStorage } from './react-global-state-hooks';
+import { CustomActionsContext, SimpleContext } from './react-context';
+import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
 
 const App = () => {
   return (
@@ -13,6 +13,10 @@ const App = () => {
         <SimpleContext />
 
         <SimpleStorage />
+
+        <CustomActionsContext />
+
+        <CustomActionsStore />
       </div>
     </div>
   );
