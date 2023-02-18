@@ -60,57 +60,9 @@ const SecondComponent: React.FC = () => {
 };
 
 export const CustomActionsStore: React.FC = () => {
-  const code = `const CountContext = createContext(0);
-
-  const CountSetterContext = createContext({
-    increase: null as () => void,
-    decrease: null as () => void,
-  });
-  
-  const useCount = () => {
-    const count = useContext(CountContext);
-  
-    return count;
-  };
-  
-  const useCountSetter = () => {
-    const { increase, decrease } = useContext(CountSetterContext);
-  
-    return { increase, decrease };
-  };
-  
-  const CountProvider: React.FC<PropsWithChildren> = ({ children }) => {
-    const [count, setState] = useState(0);
-  
-    const increase = useCallback(() => setState((state) => state + 1), []);
-    const decrease = useCallback(() => setState((state) => state - 1), []);
-  
-    return (
-      <CountSetterContext.Provider value={{ increase, decrease }}>
-        <CountContext.Provider value={count}>{children}</CountContext.Provider>
-      </CountSetterContext.Provider>
-    );
-  };
-  
-  ....
-  <CountProvider>
-      <App />
-  </CountProvider>
-  };
-  
-  ...
-  
-  // In the component, to subscribe to the state
-  const count = useCount();
-  
-  ...
-  // To subscribe to the custom actions, in the component
-  const { increase, decrease } = useCountSetter();
-  `;
-
   return (
     <div className='flex flex-col gap-4'>
-      <Container title='GlobalStore with custom actions' bottom={Legend}>
+      <Container title='GlobalStore with custom actions'>
         <div className='flex-1 grid grid-cols-2 gap-4'>
           <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
             <p className='text-sm text-gray-500'>
@@ -118,9 +70,8 @@ export const CustomActionsStore: React.FC = () => {
               custom configuration as the third argument of the constructor.
             </p>
 
-            <Collapsible title='See Code'>
-              <code className='block overflow-scroll'>
-                <pre className='block'>{`const store = new GlobalStore(0, {
+            <code className='block overflow-scroll'>
+              <pre className='block'>{`const store = new GlobalStore(0, {
   localStorageKey: 'count1',
   encrypt: false,
 }, {
@@ -138,60 +89,77 @@ decrease() {
 },
 
 } as const);
-
-// everthing keeps working as before
-const useCount = store.getHook();
-const [getCount, actions] = store.getHookDecoupled();
-
-// The mayor difference is that now 
-// instead of a simple setter function, 
-// we get an object with all the custom 
-// actions that we defined
-
-// example
-actions.increase();
-actions.decrease();
 `}</pre>
-              </code>
-            </Collapsible>
+            </code>
+            <br />
+
+            <label className='block border-b pb-3 col-span-2'>
+              <strong>Then in the component:</strong>
+            </label>
+
+            <code>
+              <pre>{`const [getCount, actions] = store.getHook();
+
+// now instead of a simple setter function, 
+// we get an object with all the custom 
+
+actions.increase();
+actions.decrease();`}</pre>
+            </code>
+            <br />
+            <p className='text-justify text-sm text-gray-500'>
+              The second argument of constructor is the configuration object,
+              which can recibe the life cycle hooks, and some extra
+              configuration like the <strong>localStorageKey</strong> and{' '}
+              <strong>encrypt</strong> options which will make the state persist
+              in the local storage whithout encrypting it.
+              <br />
+              you can see more about the configuration object in the{' '}
+              <a
+                className=' text-blue-500 hover:underline'
+                href='https://www.npmjs.com/package/react-native-global-state-hooks'
+              >
+                package documentation
+              </a>
+            </p>
           </div>
 
           <FirstComponent />
           <SecondComponent />
 
-          <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
-            <Collapsible title='See Code'>
-              <code className='block overflow-scroll'>
-                <pre className='block'>{code}</pre>
-              </code>
-            </Collapsible>
+          <div className='col-span-2  pt-2 flex flex-col gap-2'>
+            <label className='block border-b pb-3 col-span-2 '>
+              <strong>Decoupled hook:</strong>
+            </label>
+
+            <p className='text-justify text-sm text-gray-500 mb-3'>
+              Check the file
+              <strong>...src/react-global-state-hooks/CustomActions.tsx</strong>
+              <br />
+              <br />
+              In this example you are able to nocite that finally we manage to
+              separate the manipulation of the state from the subscription to
+              the state.
+              <br />
+              <br />
+              This feature allow us to create a more flexibiliy and reduce
+              unnecesary re-renders, you just need to use{' '}
+              <strong>getHookDecoupled</strong> instead of{' '}
+              <strong>getHook</strong>
+            </p>
+
+            <code className='block overflow-scroll'>
+              <pre>{`const [getCount, actions] = store.getHookDecoupled();
+
+// decoupled actions linked to the store
+actions.increase();
+actions.decrease();
+
+console.log(getCount());// 0`}</pre>
+            </code>
           </div>
         </div>
       </Container>
     </div>
   );
 };
-
-const Legend = (() => {
-  const Component = () => {
-    return (
-      <div className=' w-full flex flex-col gap-4'>
-        <p className='text-justify text-sm text-gray-500'>
-          Check the file
-          <strong>...src/react-global-state-hooks/CustomActions.tsx</strong>
-          <br />
-          <br />
-          In this example you are able to nocite that finally we manage to
-          separate the manipulation of the state from the subscription to the
-          state.
-          <br />
-          <br />
-          This feature allow us to create a more flexible and reduce unnecesary
-          re-renders.
-        </p>
-      </div>
-    );
-  };
-
-  return <Component />;
-})();

@@ -116,7 +116,7 @@ export const SimpleStorage: React.FC = () => {
           <code className=' overflow-scroll '>
             <pre>{`const store = new GlobalStore(0);
 
-const [getCount, setCountDecoupled] = store.getHookDecoupled();
+const [, setCount] = store.getHookDecoupled();
             `}</pre>
           </code>
         </div>
