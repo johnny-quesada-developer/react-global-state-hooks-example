@@ -2,7 +2,6 @@ import React from 'react';
 import { GlobalStore } from 'react-global-state-hooks';
 import { StoreTools } from 'react-native-global-state-hooks/lib';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
-import { Collapsible } from '../fixtures/Collapsible';
 
 const store = new GlobalStore(
   0,
@@ -25,7 +24,7 @@ const store = new GlobalStore(
 );
 
 const useCount = store.getHook();
-const [getCount, actions] = store.getHookDecoupled();
+const [, actions] = store.getHookDecoupled();
 
 const FirstComponent: React.FC = () => {
   const rendersCount = useRenderCount();
