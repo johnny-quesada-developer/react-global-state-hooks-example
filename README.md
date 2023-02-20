@@ -11,3 +11,5 @@ Just Run in the terminal
 ```
 yarn start
 ```
+
+For seen a running example of the hooks, you can check the following link: [react-global-state-hooks-example](https://github.com/johnny-quesada-developer/react-global-state-hooks-example)
