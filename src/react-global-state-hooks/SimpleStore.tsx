@@ -1,5 +1,5 @@
 import React from 'react';
-import GlobalStore from 'react-native-global-state-hooks';
+import { GlobalStore } from 'react-global-state-hooks';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 
 const store = new GlobalStore(0);
