@@ -18,7 +18,7 @@ jobs:
           yarn run build
 
       - name: Deploy 🚀
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
           folder: build

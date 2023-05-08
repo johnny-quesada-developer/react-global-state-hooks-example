@@ -2,10 +2,10 @@ import { CustomActionsContext, SimpleContext } from './react-context';
 import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
 import { ThemeButton } from './components';
 import { useEffect } from 'react';
-import { restoreTheme, useTheme } from './states';
+import { restoreTheme, themeGetter } from './states';
 
 const App = () => {
-  const [theme] = useTheme();
+  const theme = themeGetter();
 
   useEffect(() => {
     restoreTheme();
@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div
       className={[
-        `h-full pb-96  pt-10 flex flex-col gap-6 `,
+        `h-full pb-96  pt-10 flex flex-col gap-6  animate-fadeIn `,
         theme === 'light' ? 'bg-gray-100' : 'bg-gray-700',
       ].join(' ')}
     >
@@ -32,7 +32,7 @@ const App = () => {
 
         <h2
           className={[
-            'text-3xl font-bold text-center ',
+            'text-2xl font-bold text-center my-3',
             theme === 'light' ? 'text-gray-700' : 'text-gray-200',
           ].join(' ')}
         >
@@ -45,11 +45,11 @@ const App = () => {
 
         <h2
           className={[
-            'text-3xl font-bold text-center ',
+            'text-2xl font-bold text-center my-10',
             theme === 'light' ? 'text-gray-700' : 'text-gray-200',
           ].join(' ')}
         >
-          react useContext
+          useContext
         </h2>
 
         <SimpleContext />

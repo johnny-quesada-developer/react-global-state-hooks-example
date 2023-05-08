@@ -170,17 +170,17 @@ const Legend = (() => {
       <div className=' flex flex-col gap-4'>
         <p className='text-justify text-sm text-gray-500'>
           Check the file
-          <strong>...src/react-context/CustomActions.tsx</strong>
+          <strong>CustomActions.tsx</strong>
           <br />
           <br />
-          In this example you are able to notice that even when we created two
-          separate context for separating the state and the custom actions, the
-          Setter Component which is suppose is not connected to the state is
-          still re-rendering.
-          <br />
-          <br />
-          Also notice that for adding a second context the boilerplate code that
-          we need to generate it got just duplicated.
+          In this example you are able to notice that separating the state from
+          the actions it requires way more code which you can avoid by using{' '}
+          <a
+            className=' text-blue-500 hover:underline'
+            href='https://www.npmjs.com/package/react-global-state-hooks'
+          >
+            rect-global-state-hooks
+          </a>
         </p>
       </div>
     );
