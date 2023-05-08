@@ -19,7 +19,7 @@ const FirstComponent: React.FC = () => {
       color='bg-blue-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex'>
         <Button onClick={() => setState((state) => state + 1)}>Increase</Button>
       </div>
     </StateDetails>
@@ -37,7 +37,7 @@ const SecondComponent: React.FC = () => {
       color='bg-orange-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex'>
         <Button onClick={() => setState((state) => state - 1)}>Decrease</Button>
       </div>
     </StateDetails>
@@ -55,7 +55,7 @@ const ThirdComponentDecoupled: React.FC = () => {
       color='bg-blue-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex'>
         <Button onClick={() => setCountDecoupled((state) => state + 1)}>
           Increase
         </Button>
@@ -82,7 +82,7 @@ const FourthComponent: React.FC = () => {
       color='bg-orange-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-end gap-3'>
+      <div className='flex-1 flex gap-3 flex-wrap'>
         <Button onClick={() => setState((state) => state + 1)}>Increase</Button>
         <Button onClick={() => setState((state) => state - 1)}>Decrease</Button>
       </div>

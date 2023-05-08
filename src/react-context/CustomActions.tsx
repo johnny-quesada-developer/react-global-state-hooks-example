@@ -56,7 +56,7 @@ const FirstComponent: React.FC = () => {
       color='bg-blue-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-between'>
+      <div className='flex-1 flex flex-wrap gap-3'>
         <Button onClick={increase}>Increase</Button>
         <Button onClick={decrease}>Decrease</Button>
       </div>

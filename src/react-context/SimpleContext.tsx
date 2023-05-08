@@ -41,7 +41,7 @@ const FirstComponent: React.FC = () => {
 
   return (
     <StateDetails count={count} color='bg-blue-50' renders={rendersCount}>
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex'>
         <Button onClick={() => setState((state) => state + 1)}>Increase</Button>
       </div>
     </StateDetails>
@@ -54,7 +54,7 @@ const SecondComponent: React.FC = () => {
 
   return (
     <StateDetails count={count} color='bg-orange-50' renders={rendersCount}>
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex'>
         <Button onClick={() => setState((state) => state - 1)}>Decrease</Button>
       </div>
     </StateDetails>
