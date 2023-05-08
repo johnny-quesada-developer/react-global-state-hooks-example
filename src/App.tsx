@@ -19,7 +19,7 @@ const App = () => {
       ].join(' ')}
     >
       <div className='relative flex flex-col lg:grid grid-cols-1 gap-4 items-center m-auto'>
-        <ThemeButton className='sticky lg:justify-self-end self-end top-0 right-10'></ThemeButton>
+        <ThemeButton className='sticky lg:justify-self-end self-end top-0 right-3'></ThemeButton>
 
         <h1
           className={[
