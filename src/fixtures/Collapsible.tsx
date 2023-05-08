@@ -9,7 +9,7 @@ export const Collapsible: React.FC<PropsWithChildren<CollapsibleProps>> = ({
   children,
 }) => {
   return (
-    <details className='flex-1'>
+    <details open={true} className='flex-1'>
       <summary className='flex justify-between items-center mb-2'>
         <h2 className='font-bold text-lg  cursor-pointer underline text-blue-500 hover:text-blue-800'>
           {title}

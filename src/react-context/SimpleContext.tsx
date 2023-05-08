@@ -64,7 +64,7 @@ const SecondComponent: React.FC = () => {
 const Legend = (() => {
   const Component = () => {
     return (
-      <div className='max-w-full flex flex-col gap-4'>
+      <div className='flex flex-col gap-4'>
         <p className='text-justify text-sm text-gray-500'>
           Check the file
           <strong>...SimpleContext.tsx</strong>
@@ -80,18 +80,23 @@ const Legend = (() => {
         </p>
 
         <Collapsible title='See Code'>
-          <code className='block overflow-scroll'>
-            <pre className='block'>{`const CountContext = createContext({
+          <pre>
+            <code className='language-javascript block overflow-scroll'>
+              {`//let's create a context for the state
+
+const CountContext = createContext({
   count: 0,
-  setState: null as Dispatch<SetStateAction<number>>,
+  setState: null as Dispatch<SetStateAction<number>>
 });
 
+// let's create a custom hook for subscribing to the state context
 const useCount = () => {
   const { count, setState } = useContext(CountContext);
 
   return { count, setState };
 };
 
+// let's create a provider for the state context
 const CountProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [count, setState] = useState(0);
 
@@ -106,12 +111,14 @@ const CountProvider: React.FC<PropsWithChildren> = ({ children }) => {
     </CountContext.Provider>
   );
 
+// let's wrap the components that need to access the state otherwise they won't be able to access the state
 ....
 <CountProvider>
     <App />
 </CountProvider>
-};`}</pre>
-          </code>
+};`}
+            </code>
+          </pre>
         </Collapsible>
       </div>
     );

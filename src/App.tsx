@@ -1,22 +1,60 @@
-// import { ReactGlobalStateHookExample } from './react-global-state-hooks';
 import { CustomActionsContext, SimpleContext } from './react-context';
 import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
+import { ThemeButton } from './components';
+import { useEffect } from 'react';
+import { restoreTheme, useTheme } from './states';
 
 const App = () => {
-  return (
-    <div className='w-full h-full pb-96 bg-blue-50 pt-10 flex flex-col gap-6'>
-      <h1 className='text-2xl font-bold text-center text-gray-700'>
-        React Global State Hooks vs React Context
-      </h1>
+  const [theme] = useTheme();
 
-      <div className='flex flex-col lg:grid grid-cols-2 gap-4 lg:items-baseline m-auto'>
-        <SimpleContext />
+  useEffect(() => {
+    restoreTheme();
+  }, []);
+
+  return (
+    <div
+      className={[
+        `h-full pb-96  pt-10 flex flex-col gap-6 `,
+        theme === 'light' ? 'bg-gray-100' : 'bg-gray-700',
+      ].join(' ')}
+    >
+      <div className='relative flex flex-col lg:grid grid-cols-1 gap-4 items-center m-auto'>
+        <ThemeButton className='sticky lg:justify-self-end self-end top-0 right-0'></ThemeButton>
+
+        <h1
+          className={[
+            'text-3xl font-bold text-center ',
+            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
+          ].join(' ')}
+        >
+          React Global State Hooks vs React Context
+        </h1>
+
+        <h2
+          className={[
+            'text-3xl font-bold text-center ',
+            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
+          ].join(' ')}
+        >
+          react-global-state-hooks
+        </h2>
 
         <SimpleStorage />
 
-        <CustomActionsContext />
-
         <CustomActionsStore />
+
+        <h2
+          className={[
+            'text-3xl font-bold text-center ',
+            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
+          ].join(' ')}
+        >
+          react useContext
+        </h2>
+
+        <SimpleContext />
+
+        <CustomActionsContext />
       </div>
     </div>
   );

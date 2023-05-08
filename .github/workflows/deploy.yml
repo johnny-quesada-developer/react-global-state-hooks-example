@@ -1,48 +1,24 @@
-name: Deploy to GitHub Pages
+name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-
-permissions:
-  contents: write
-  packages: write
-  pull-requests: write
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18.x
-
-      - name: Install dependencies
+      - name: Install, lint, build 🔧
         run: |
-          yarn
-          yarn build
+          yarn install
 
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v2
-        with:
-          name: production-files
-          path: ./build
+          yarn run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: build
-
-      - name: Copy static folder to deployment folder
-        run: |
-          mkdir -p ./react-global-state-hooks-example/public
-          cp -r ./build/static ./react-global-state-hooks-example/public/react-global-state-hooks-example

@@ -4,6 +4,7 @@ import React, {
   createContext,
   useState,
   useCallback,
+  useMemo,
 } from 'react';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 import { Collapsible } from '../fixtures/Collapsible';
@@ -33,8 +34,12 @@ const CountProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const increase = useCallback(() => setState((state) => state + 1), []);
   const decrease = useCallback(() => setState((state) => state - 1), []);
 
+  const actions = useMemo(() => {
+    return { increase, decrease };
+  }, [increase, decrease]);
+
   return (
-    <CountSetterContext.Provider value={{ increase, decrease }}>
+    <CountSetterContext.Provider value={actions}>
       <CountContext.Provider value={count}>{children}</CountContext.Provider>
     </CountSetterContext.Provider>
   );
@@ -98,9 +103,14 @@ export const CustomActionsContext: React.FC = () => {
   
     const increase = useCallback(() => setState((state) => state + 1), []);
     const decrease = useCallback(() => setState((state) => state - 1), []);
+
+    // this is necessary in order to avoid re-creating the object
+    const actions = useMemo(() => {
+      return { increase, decrease };
+    }, [increase, decrease]);
   
     return (
-      <CountSetterContext.Provider value={{ increase, decrease }}>
+      <CountSetterContext.Provider value={actions}>
         <CountContext.Provider value={count}>{children}</CountContext.Provider>
       </CountSetterContext.Provider>
     );
@@ -140,9 +150,11 @@ export const CustomActionsContext: React.FC = () => {
 
             <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
               <Collapsible title='See Code'>
-                <code className='block overflow-scroll'>
-                  <pre className='block'>{code}</pre>
-                </code>
+                <pre>
+                  <code className='block overflow-scroll language-javascript'>
+                    {code}
+                  </code>
+                </pre>
               </Collapsible>
             </div>
           </div>
@@ -155,7 +167,7 @@ export const CustomActionsContext: React.FC = () => {
 const Legend = (() => {
   const Component = () => {
     return (
-      <div className=' w-full flex flex-col gap-4'>
+      <div className=' flex flex-col gap-4'>
         <p className='text-justify text-sm text-gray-500'>
           Check the file
           <strong>...src/react-context/CustomActions.tsx</strong>

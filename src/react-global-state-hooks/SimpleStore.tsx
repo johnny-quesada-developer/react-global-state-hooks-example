@@ -1,18 +1,24 @@
 import React from 'react';
-import { GlobalStore } from 'react-global-state-hooks';
+import {
+  createGlobalState,
+  createGlobalStateWithDecoupledFuncs,
+} from 'react-global-state-hooks';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 
-const store = new GlobalStore(0);
-
-const useCount = store.getHook();
-const [getCount, setCountDecoupled] = store.getHookDecoupled();
+const [useCount, getCount, setCountDecoupled] =
+  createGlobalStateWithDecoupledFuncs(0);
 
 const FirstComponent: React.FC = () => {
   const [count, setState] = useCount();
   const rendersCount = useRenderCount();
 
   return (
-    <StateDetails count={count} color='bg-blue-50' renders={rendersCount}>
+    <StateDetails
+      label='Component 1'
+      count={count}
+      color='bg-blue-50'
+      renders={rendersCount}
+    >
       <div className='flex-1 flex justify-end'>
         <Button onClick={() => setState((state) => state + 1)}>Increase</Button>
       </div>
@@ -25,7 +31,12 @@ const SecondComponent: React.FC = () => {
   const rendersCount = useRenderCount();
 
   return (
-    <StateDetails count={count} color='bg-orange-50' renders={rendersCount}>
+    <StateDetails
+      label='Component 2'
+      count={count}
+      color='bg-orange-50'
+      renders={rendersCount}
+    >
       <div className='flex-1 flex justify-end'>
         <Button onClick={() => setState((state) => state - 1)}>Decrease</Button>
       </div>
@@ -39,7 +50,7 @@ const ThirdComponentDecoupled: React.FC = () => {
 
   return (
     <StateDetails
-      label='Decoupled'
+      label='Decoupled Component'
       count={count}
       color='bg-blue-50'
       renders={rendersCount}
@@ -53,18 +64,26 @@ const ThirdComponentDecoupled: React.FC = () => {
   );
 };
 
+const useCount4 = createGlobalState(0, {
+  localStorage: {
+    key: 'count4',
+    encrypt: true,
+  },
+});
+
 const FourthComponent: React.FC = () => {
-  const [count, setState] = useCount();
+  const [count, setState] = useCount4();
   const rendersCount = useRenderCount();
 
   return (
     <StateDetails
-      label='Connected'
+      label='Local Storage Synced'
       count={count}
       color='bg-orange-50'
       renders={rendersCount}
     >
-      <div className='flex-1 flex justify-end'>
+      <div className='flex-1 flex justify-end gap-3'>
+        <Button onClick={() => setState((state) => state + 1)}>Increase</Button>
         <Button onClick={() => setState((state) => state - 1)}>Decrease</Button>
       </div>
     </StateDetails>
@@ -73,27 +92,36 @@ const FourthComponent: React.FC = () => {
 
 export const SimpleStorage: React.FC = () => {
   return (
-    <Container title='Simple GlobalStore'>
+    <Container title='Simple global state'>
       <div className='flex-1 grid grid-cols-2 gap-4'>
         <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
           <p className='text-sm text-gray-500'>
-            Take a look on <strong>SimpleStore.tsx</strong> <br />
+            <strong>SimpleStore.tsx</strong>
             <br />
-            Here you can notice that dont need any longer to create a{' '}
-            <span className='text-red-500'>context</span>, a{' '}
-            <span className='text-red-500'>provider</span>, a{' '}
-            <span className='text-red-500'>hook</span>, and later{' '}
-            <span className='text-red-500'>wrappers</span>... We just need to
-            create an <strong>GlobalStore</strong> get the hook and use it.
+            <br />
+            We are gonna create a global state hook <strong>
+              useCount
+            </strong>{' '}
+            with one line of code.
           </p>
-          <code className='my-4'>
-            <p>const store = new GlobalStore(0);</p>
-            <br />
-            <p>const useCount = store.getHook();</p>
-          </code>
+
+          <pre>
+            <code className='language-javascript my-4'>
+              <p>const useCount = createGlobalState(0)</p>
+            </code>
+          </pre>
+
+          <p className='text-sm text-gray-500'>
+            That's it! Welcome to global hooks.
+          </p>
+
+          <p className='text-sm text-gray-500'>
+            Let's see how to use it inside a our component
+          </p>
         </div>
 
         <FirstComponent />
+
         <SecondComponent />
 
         <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
@@ -107,19 +135,34 @@ export const SimpleStorage: React.FC = () => {
         </div>
 
         <ThirdComponentDecoupled />
-        <FourthComponent />
 
         <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
           <p className='text-sm text-gray-500'>
             To get the decoupled hooks you can use:
           </p>
-          <code className=' overflow-scroll '>
-            <pre>{`const store = new GlobalStore(0);
-
-const [, setCount] = store.getHookDecoupled();
-            `}</pre>
-          </code>
+          <pre>
+            <code className='language-javascript overflow-scroll '>
+              {`const [useCount, countGetter, countSetter] = createGlobalStateWithDecoupledFuncs(0);`}
+            </code>
+          </pre>
         </div>
+
+        <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
+          <p className='text-sm text-gray-500'>
+            Finally, for store the state in the local storage you can use:
+          </p>
+          <pre>
+            <code className='language-javascript overflow-scroll '>
+              {`const useCount = createGlobalState(0, {
+  localStorage: {
+    key: 'count4',
+  }
+});`}
+            </code>
+          </pre>
+        </div>
+
+        <FourthComponent />
       </div>
     </Container>
   );

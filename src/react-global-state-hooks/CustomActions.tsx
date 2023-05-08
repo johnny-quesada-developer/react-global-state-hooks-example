@@ -1,15 +1,16 @@
 import React from 'react';
-import { GlobalStore } from 'react-global-state-hooks';
-import { StoreTools } from 'react-global-state-hooks/lib/GlobalStore.types';
+import {
+  createGlobalStateWithDecoupledFuncs,
+  StoreTools,
+} from 'react-global-state-hooks';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 
-const store = new GlobalStore(
-  0,
-  {
-    localStorageKey: 'count1',
-    encrypt: false,
+const [useCount, , actions] = createGlobalStateWithDecoupledFuncs(0, {
+  localStorage: {
+    key: 'count',
+    encrypt: true,
   },
-  {
+  actions: {
     increase() {
       return ({ setState }: StoreTools<number>) => {
         setState((state) => state + 1);
@@ -20,11 +21,8 @@ const store = new GlobalStore(
         setState((state) => state - 1);
       };
     },
-  } as const
-);
-
-const useCount = store.getHook();
-const [, actions] = store.getHookDecoupled();
+  } as const,
+});
 
 const FirstComponent: React.FC = () => {
   const rendersCount = useRenderCount();
@@ -65,98 +63,75 @@ export const CustomActionsStore: React.FC = () => {
         <div className='flex-1 grid grid-cols-2 gap-4'>
           <div className='col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2'>
             <p className='text-sm text-gray-500'>
-              Creating an store with custom actions is so easy, just pass the
-              custom configuration as the third argument of the constructor.
+              Creating an store with custom actions is so easy, add the actions
+              object to the configuration object, now the mutations of the state
+              will only be possible through the actions.
             </p>
 
-            <code className='block overflow-scroll'>
-              <pre className='block'>{`const store = new GlobalStore(0, {
-  localStorageKey: 'count1',
-  encrypt: false,
-}, {
+            <pre>
+              <code className='language-javascript block overflow-scroll'>
+                {`const useCount = createGlobalState(0, {
+  actions: {
+    increase() {
+      return ({ setState }: StoreTools<number>) => {
+        setState((state) => state + 1);
+      };
+    },
 
-increase() {
-  return ({ setState }: StoreTools<number>) => {
-    setState((state) => state + 1);
-  };
-},
-
-decrease() {
-  return ({ setState }: StoreTools<number>) => {
-    setState((state) => state - 1);
-  };
-},
-
-} as const);
-`}</pre>
-            </code>
+    decrease() {
+      return ({ setState }: StoreTools<number>) => {
+        setState((state) => state - 1);
+      };
+    },
+  } as const,
+});`}
+              </code>
+            </pre>
             <br />
 
             <label className='block border-b pb-3 col-span-2'>
-              <strong>Then in the component:</strong>
+              <strong>Let's see how your component will look:</strong>
             </label>
 
-            <code>
-              <pre>{`const [getCount, actions] = store.getHook();
+            <pre>
+              <code className='language-javascript block overflow-scroll'>
+                {`const [count, actions] = useCount();
 
-// now instead of a simple setter function, 
-// we get an object with all the custom 
+// now instead of a simple setter function, we get an object with all the custom actions
 
 actions.increase();
-actions.decrease();`}</pre>
-            </code>
+actions.decrease();`}
+              </code>
+            </pre>
             <br />
             <p className='text-justify text-sm text-gray-500'>
               The second argument of constructor is the configuration object,
-              which can recibe the life cycle hooks, and some extra
+              which can receive the life cycle methods hooks, and some extra
               configuration like the <strong>localStorageKey</strong> and{' '}
               <strong>encrypt</strong> options which will make the state persist
-              in the local storage whithout encrypting it.
+              in the local storage.
               <br />
-              you can see more about the configuration object in the{' '}
+              you can see more about the configuration object in the
+              documentations:{' '}
               <a
                 className=' text-blue-500 hover:underline'
+                href='https://www.npmjs.com/package/react-global-state-hooks'
+              >
+                rect-global-state-hooks
+              </a>{' '}
+              for web, or{' '}
+              <a
+                className='text-blue-500 hover:underline'
                 href='https://www.npmjs.com/package/react-native-global-state-hooks'
               >
-                package documentation
-              </a>
+                rect-native-global-state-hooks
+              </a>{' '}
+              for mobile
             </p>
           </div>
 
           <FirstComponent />
           <SecondComponent />
-
-          <div className='col-span-2  pt-2 flex flex-col gap-2'>
-            <label className='block border-b pb-3 col-span-2 '>
-              <strong>Decoupled hook:</strong>
-            </label>
-
-            <p className='text-justify text-sm text-gray-500 mb-3'>
-              Check the file
-              <strong>...src/react-global-state-hooks/CustomActions.tsx</strong>
-              <br />
-              <br />
-              In this example you are able to nocite that finally we manage to
-              separate the manipulation of the state from the subscription to
-              the state.
-              <br />
-              <br />
-              This feature allow us to create a more flexibiliy and reduce
-              unnecesary re-renders, you just need to use{' '}
-              <strong>getHookDecoupled</strong> instead of{' '}
-              <strong>getHook</strong>
-            </p>
-
-            <code className='block overflow-scroll'>
-              <pre>{`const [getCount, actions] = store.getHookDecoupled();
-
-// decoupled actions linked to the store
-actions.increase();
-actions.decrease();
-
-console.log(getCount());// 0`}</pre>
-            </code>
-          </div>
         </div>
       </Container>
     </div>

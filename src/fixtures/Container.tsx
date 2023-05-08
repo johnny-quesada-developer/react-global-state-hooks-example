@@ -13,9 +13,9 @@ export const Container: React.FC<PropsWithChildren<ContainerProps>> = ({
   const isStringLegend = typeof bottom === 'string';
 
   return (
-    <div className='w-500px flex flex-col gap-4 items-center bg-white m-auto p-10 rounded-lg shadow-lg'>
+    <div className=' max-w-sm md:max-w-xl lg:max-w-5xl flex flex-col gap-4 bg-white p-10 rounded-lg shadow-lg h-fit'>
       <h1 className='font-bold text-xl'>{title}</h1>
-      <div className='flex w-full gap-3'>{children}</div>
+      <div className='flex gap-3'>{children}</div>
 
       {isStringLegend && <p className='text-base'>{bottom}</p>}
       {!isStringLegend && bottom}
