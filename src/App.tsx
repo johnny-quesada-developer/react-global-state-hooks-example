@@ -1,63 +1,50 @@
 import { CustomActionsContext, SimpleContext } from './react-context';
 import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
 import { ThemeButton } from './components';
-import { useEffect } from 'react';
-import { restoreTheme, themeGetter } from './states';
+import { themeGetter } from './states';
+import { merge } from './fixtures/util';
 
 const App = () => {
-  const theme = themeGetter();
+    const theme = themeGetter();
 
-  useEffect(() => {
-    restoreTheme();
-  }, []);
-
-  return (
-    <div
-      className={[
-        `h-full pb-96  pt-10 flex flex-col gap-6  animate-fadeIn `,
-        theme === 'light' ? 'bg-gray-100' : 'bg-gray-700',
-      ].join(' ')}
-    >
-      <div className='relative flex flex-col lg:grid grid-cols-1 gap-4 items-center m-auto'>
-        <ThemeButton className='sticky lg:justify-self-end self-end top-0 right-3'></ThemeButton>
-
-        <h1
-          className={[
-            'text-3xl font-bold text-center ',
-            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
-          ].join(' ')}
+    return (
+        <div
+            className={merge('h-full pb-96 flex flex-col gap-6 animate-fadeIn', {
+                'bg-gray-100': theme === 'light',
+                'bg-gray-700': theme === 'dark',
+            })}
         >
-          React Global State Hooks vs React Context
-        </h1>
+            <div className="relative flex flex-col lg:grid grid-cols-1 gap-4 items-center m-auto">
+                <ThemeButton className="sticky lg:justify-self-end self-end top-10 right-3"></ThemeButton>
 
-        <h2
-          className={[
-            'text-2xl font-bold text-center my-3',
-            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
-          ].join(' ')}
-        >
-          react-global-state-hooks
-        </h2>
+                <h2
+                    className={merge('text-2xl font-bold text-center', {
+                        'text-gray-700': theme === 'light',
+                        'text-gray-200': theme === 'dark',
+                    })}
+                >
+                    react-global-state-hooks
+                </h2>
 
-        <SimpleStorage />
+                <SimpleStorage />
 
-        <CustomActionsStore />
+                <CustomActionsStore />
 
-        <h2
-          className={[
-            'text-2xl font-bold text-center my-10',
-            theme === 'light' ? 'text-gray-700' : 'text-gray-200',
-          ].join(' ')}
-        >
-          useContext
-        </h2>
+                <h2
+                    className={merge('text-2xl font-bold text-center my-10', {
+                        'text-gray-700': theme === 'light',
+                        'text-gray-200': theme === 'dark',
+                    })}
+                >
+                    useContext
+                </h2>
 
-        <SimpleContext />
+                <SimpleContext />
 
-        <CustomActionsContext />
-      </div>
-    </div>
-  );
+                <CustomActionsContext />
+            </div>
+        </div>
+    );
 };
 
 export default App;

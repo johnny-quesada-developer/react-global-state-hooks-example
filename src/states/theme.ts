@@ -1,50 +1,76 @@
-import Prism from 'prismjs';
+import prismjs from 'prismjs';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
 
-import {
-  createGlobalStateWithDecoupledFuncs,
-  StoreTools,
-} from 'react-global-state-hooks';
+import { createGlobalStateWithDecoupledFuncs, StoreTools } from 'react-global-state-hooks';
 
 export type Theme = 'light' | 'dark';
 
-export const [useTheme, themeGetter, themeActions] =
-  createGlobalStateWithDecoupledFuncs('dark' as Theme, {
+const loadTheme = (value: string) => {
+    const source = loadTheme as unknown as {
+        promise: Promise<void>;
+        isLoaded: boolean;
+    };
+
+    if (source.isLoaded) return Promise.resolve();
+    if (source.promise) return source.promise;
+
+    const prismjsTheme = (
+        {
+            light: 'prism',
+            dark: 'prism-tomorrow',
+        } as const
+    )[value];
+
+    source.promise = new Promise(async (resolve) => {
+        // @ts-ignore
+        await (prismjsTheme === 'prism' ? import('prismjs/themes/prism.css') : import('prismjs/themes/prism-tomorrow.css'));
+
+        source.isLoaded = true;
+        resolve();
+    });
+
+    return source.promise;
+};
+
+export const [useTheme, themeGetter, theme] = createGlobalStateWithDecoupledFuncs('dark' as Theme, {
     localStorage: {
-      key: 'theme',
+        key: 'theme',
     },
     actions: {
-      toggle() {
-        return ({ setState }: StoreTools<Theme>) => {
-          setState((state) => (state === 'light' ? 'dark' : 'light'));
+        loadTheme: () => {
+            return async ({ getState }: StoreTools<Theme>) => {
+                await loadTheme(getState());
+            };
+        },
+        highlight: () => {
+            return async () => {
+                await theme.loadTheme();
 
-          globalThis.location.reload();
-        };
-      },
+                prismjs.highlightAll();
+            };
+        },
+        highlightElement: (element: HTMLElement) => {
+            return async () => {
+                await theme.loadTheme();
+
+                prismjs.highlightElement(element, false);
+            };
+        },
+        toggle() {
+            return ({ setState }: StoreTools<Theme>) => {
+                setState((state) => (state === 'light' ? 'dark' : 'light'));
+
+                globalThis.location.reload();
+            };
+        },
     } as const,
-  });
+    onInit: (async ({ getState }) => {
+        const value = getState();
 
-export const restoreTheme = () => {
-  const theme = themeGetter();
+        document.documentElement.classList.add(value);
 
-  const prismjsTheme = {
-    light: 'prism',
-    dark: 'prism-tomorrow',
-  }[theme];
-
-  Prism.theme = prismjsTheme;
-  Prism.highlightAll();
-
-  if (theme === 'light') {
-    // Load the "prism" theme
-    // @ts-ignore
-    import('prismjs/themes/prism.css').then(() => {
-      Prism.highlightAll();
-    });
-  } else {
-    // Load the "prism-tomorrow" theme
-    // @ts-ignore
-    import('prismjs/themes/prism-tomorrow.css').then(() => {
-      Prism.highlightAll();
-    });
-  }
-};
+        await loadTheme(value);
+    }) as null,
+});
