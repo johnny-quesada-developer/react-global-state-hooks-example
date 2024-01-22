@@ -4,6 +4,7 @@
     "private": true,
     "homepage": "https://johnny-quesada-developer.github.io/react-global-state-hooks-example/",
     "dependencies": {
+        "easy-css-merge": "^1.0.0",
         "prismjs": "^1.29.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

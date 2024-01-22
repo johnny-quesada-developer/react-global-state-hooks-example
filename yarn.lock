@@ -3919,6 +3919,11 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
+easy-css-merge@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/easy-css-merge/-/easy-css-merge-1.0.0.tgz#b7734c34ae0f62fc0029bcb2bc81f65d689974fc"
+  integrity sha512-iCwKV/XnrwLiWnLG9VYFktxVE0OaSjaeQ01czt8mc8yudAWQhQDmxcwwxLj2vGyw12OZ39JeKz9OuAK42dHUAA==
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"

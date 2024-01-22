@@ -2,7 +2,7 @@ import { CustomActionsContext, SimpleContext } from './react-context';
 import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
 import { ThemeButton } from './components';
 import { themeGetter } from './states';
-import { merge } from './fixtures/util';
+import merge from 'easy-css-merge';
 
 const App = () => {
     const theme = themeGetter();

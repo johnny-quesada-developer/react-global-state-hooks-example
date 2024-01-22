@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
 import { useTheme } from '../states';
-import { merge } from '../fixtures/util';
+import merge from 'easy-css-merge';
 
 export const ThemeButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
     const [theme, actions] = useTheme();

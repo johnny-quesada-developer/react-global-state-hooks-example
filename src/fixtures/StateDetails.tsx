@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { merge } from './util';
+import merge from 'easy-css-merge';
 
 export type StateDetailsProps = PropsWithChildren<{
     label?: string;

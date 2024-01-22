@@ -1,5 +1,5 @@
 import React, { HtmlHTMLAttributes, PropsWithChildren, useEffect, useImperativeHandle, useRef } from 'react';
-import { merge, MergeFilter } from './util';
+import merge, { MergeFilter } from 'easy-css-merge';
 import { theme } from '../states';
 
 export type CodeFragmentApi = {};
