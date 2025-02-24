@@ -1,9 +1,10 @@
 import React from 'react';
-import { createGlobalState, createGlobalStateWithDecoupledFuncs } from 'react-global-state-hooks';
+import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 import { CodeFragment, write } from '../fixtures';
 
-const [useCount, getCount, setCountDecoupled] = createGlobalStateWithDecoupledFuncs(0);
+const useCount = createGlobalState(0);
+const [getCount, setCountDecoupled] = useCount.stateControls();
 
 const FirstComponent: React.FC = () => {
     const [count, setState] = useCount();
@@ -114,8 +115,8 @@ export const SimpleStorage: React.FC = () => {
                 <div className="col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2">
                     <p className="text-sm text-gray-500">To get the decoupled hooks you can use something like this:</p>
                     <CodeFragment>
-                        {write('const [useTheme, getTheme, setTheme] =')
-                            .newLine(4, "createGlobalStateWithDecoupledFuncs<'light' | 'dark'>('light');")
+                        {write("const useTheme = createGlobalState<'light' | 'dark'>('light');")
+                            .newLine(0, 'const [getTheme, setTheme] = useTheme.stateControls();')
                             .newLine(0, '')
                             .newLine(0, 'const App: React.FC = () => {')
                             .newLine(4, 'const [theme] = useTheme();')
@@ -140,8 +141,7 @@ export const SimpleStorage: React.FC = () => {
                 <div className="col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2">
                     <p className="text-sm text-gray-500">Finally, for store the state in the local storage you can use:</p>
                     <CodeFragment>
-                        {write('const [useTheme, getTheme, setTheme] =')
-                            .newLine(4, "createGlobalStateWithDecoupledFuncs<'light' | 'dark'>('light', {")
+                        {write("const useTheme = createGlobalState<'light' | 'dark'>('light', {")
                             .newLine(8, 'localStorage: {')
                             .newLine(12, "key: 'theme', // that is all to sync with local storage")
                             .newLine(8, '},')
