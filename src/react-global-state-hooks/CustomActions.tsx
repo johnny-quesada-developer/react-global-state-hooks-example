@@ -1,25 +1,27 @@
 import React from 'react';
-import { createGlobalStateWithDecoupledFuncs, StoreTools } from 'react-global-state-hooks';
+import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button, CodeFragment, write } from '../fixtures';
 
-const [useCount, , actions] = createGlobalStateWithDecoupledFuncs(0, {
+const useCount = createGlobalState(0, {
     localStorage: {
         key: 'count',
         encrypt: true,
     },
     actions: {
         increase() {
-            return ({ setState }: StoreTools<number>) => {
+            return ({ setState }) => {
                 setState((state) => state + 1);
             };
         },
         decrease() {
-            return ({ setState }: StoreTools<number>) => {
+            return ({ setState }) => {
                 setState((state) => state - 1);
             };
         },
-    } as const,
+    },
 });
+
+const [, actions] = useCount.stateControls();
 
 const FirstComponent: React.FC = () => {
     const rendersCount = useRenderCount();
@@ -56,17 +58,17 @@ export const CustomActionsStore: React.FC = () => {
                             {write('const useCount = createGlobalState(0, {')
                                 .newLine(4, 'actions: {')
                                 .newLine(8, 'increase() {')
-                                .newLine(12, 'return ({ setState }: StoreTools<number>) => {')
+                                .newLine(12, 'return ({ setState }) => {')
                                 .newLine(16, 'setState((state) => state + 1);')
                                 .newLine(12, '};')
                                 .newLine(8, '},')
                                 .newLine()
                                 .newLine(8, 'decrease() {')
-                                .newLine(12, 'return ({ setState }: StoreTools<number>) => {')
+                                .newLine(12, 'return ({ setState }) => {')
                                 .newLine(16, 'setState((state) => state - 1);')
                                 .newLine(12, '};')
                                 .newLine(8, '},')
-                                .newLine(4, '} as const,')
+                                .newLine(4, '},')
                                 .newLine(0, '});')
                                 .concat()}
                         </CodeFragment>

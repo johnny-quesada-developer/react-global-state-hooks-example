@@ -3,7 +3,7 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
-import { createGlobalStateWithDecoupledFuncs, StoreTools } from 'react-global-state-hooks';
+import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 
 export type Theme = 'light' | 'dark';
 
@@ -16,12 +16,10 @@ const loadTheme = (value: string) => {
     if (source.isLoaded) return Promise.resolve();
     if (source.promise) return source.promise;
 
-    const prismjsTheme = (
-        {
-            light: 'prism',
-            dark: 'prism-tomorrow',
-        } as const
-    )[value];
+    const prismjsTheme = {
+        light: 'prism',
+        dark: 'prism-tomorrow',
+    }[value];
 
     source.promise = new Promise(async (resolve) => {
         // @ts-ignore
@@ -34,18 +32,20 @@ const loadTheme = (value: string) => {
     return source.promise;
 };
 
-export const [useTheme, themeGetter, theme] = createGlobalStateWithDecoupledFuncs('dark' as Theme, {
+export const useTheme = createGlobalState('dark' as Theme, {
     localStorage: {
         key: 'theme',
     },
     actions: {
         loadTheme: () => {
-            return async ({ getState }: StoreTools<Theme>) => {
+            return async ({ getState }) => {
                 await loadTheme(getState());
             };
         },
         highlight: () => {
             return async () => {
+                const [, theme] = useTheme.stateControls();
+
                 await theme.loadTheme();
 
                 prismjs.highlightAll();
@@ -53,24 +53,30 @@ export const [useTheme, themeGetter, theme] = createGlobalStateWithDecoupledFunc
         },
         highlightElement: (element: HTMLElement) => {
             return async () => {
+                const [, theme] = useTheme.stateControls();
+
                 await theme.loadTheme();
 
                 prismjs.highlightElement(element, false);
             };
         },
         toggle() {
-            return ({ setState }: StoreTools<Theme>) => {
+            return ({ setState }) => {
                 setState((state) => (state === 'light' ? 'dark' : 'light'));
 
                 globalThis.location.reload();
             };
         },
-    } as const,
-    onInit: (async ({ getState }) => {
-        const value = getState();
+    },
+    callbacks: {
+        onInit: async ({ getState }) => {
+            const value = getState();
 
-        document.documentElement.classList.add(value);
+            document.documentElement.classList.add(value);
 
-        await loadTheme(value);
-    }) as null,
+            await loadTheme(value);
+        },
+    },
 });
+
+export const [themeGetter, theme] = useTheme.stateControls();
