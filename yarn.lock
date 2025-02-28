@@ -7768,17 +7768,17 @@ react-error-overlay@^6.0.11:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
 
-react-global-state-hooks@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/react-global-state-hooks/-/react-global-state-hooks-7.0.3.tgz#709d0af183d5f789dc3b4df825c269544ab42f1b"
-  integrity sha512-gxQBMb+suB51hxrNcuE2EhJGq5vMiOPb9b/fiMIhlakfhz0DngK2Yweqj+GqG+pVZ3KGcAJc2hvh1FG7MoszOg==
+react-global-state-hooks@^8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/react-global-state-hooks/-/react-global-state-hooks-8.0.5.tgz#6ab7254c9fa0965db779d269ed280e972fbad0db"
+  integrity sha512-ZWMAYcb1U7tFUUCPx5VoR0X1aHlg7Yk08MJ8B1MzYpgwfLnlpHmEZTEVIgHtJ0TvqgO7nUQAMoQAWDs4oEu4tQ==
   dependencies:
-    react-hooks-global-states "^6.0.9"
+    react-hooks-global-states "^7.0.4"
 
-react-hooks-global-states@^6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/react-hooks-global-states/-/react-hooks-global-states-6.0.9.tgz#45b3706ec78b3e45fea95e18baabcf68ec0f92eb"
-  integrity sha512-udJFg9zjd5VwTVbyxoYx9F1Wr4hy1etpLhLK92Of1ZdKgRW7vk7br8gKyxlxzetilEKyrdyLS7AeQ0zaIsaYKg==
+react-hooks-global-states@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/react-hooks-global-states/-/react-hooks-global-states-7.0.4.tgz#5a9fb8508c93b715d71a8be3445264a6bcacae1f"
+  integrity sha512-WbUbjLnm4CqQm5/g3QHMDTf/8UNKKLf6d7k54CoYTwTzKfzzOZ1VDCn9UdYP1gaxn5dj3prX7FJeFHGbyKhYuw==
 
 react-icons@^4.8.0:
   version "4.12.0"
