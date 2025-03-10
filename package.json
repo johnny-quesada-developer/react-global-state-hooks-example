@@ -8,7 +8,7 @@
         "prismjs": "^1.29.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-global-state-hooks": "^8.0.11",
+        "react-global-state-hooks": "^9.2.2",
         "react-icons": "^4.8.0"
     },
     "devDependencies": {
