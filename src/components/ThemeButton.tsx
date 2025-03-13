@@ -10,7 +10,7 @@ export const ThemeButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>
         <button
             title="Toggle theme"
             {...props}
-            onClick={actions.toggle}
+            onClick={() => actions.toggle()}
             className={merge(
                 'bg-blue-500 hover:bg-blue-700',
                 'text-white font-bold',

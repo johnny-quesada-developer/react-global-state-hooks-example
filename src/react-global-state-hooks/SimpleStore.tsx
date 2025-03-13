@@ -3,7 +3,10 @@ import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 import { CodeFragment, write } from '../fixtures';
 
-const useCount = createGlobalState(0);
+const useCount = createGlobalState(0, {
+    name: 'useCount',
+});
+
 const [getCount, setCountDecoupled] = useCount.stateControls();
 
 const FirstComponent: React.FC = () => {
@@ -46,6 +49,7 @@ const ThirdComponentDecoupled: React.FC = () => {
 };
 
 const useCount4 = createGlobalState(0, {
+    name: 'useCount4',
     localStorage: {
         key: 'count4',
         encrypt: true,
@@ -72,9 +76,6 @@ export const SimpleStorage: React.FC = () => {
             <div className="flex-1 grid grid-cols-2 gap-4">
                 <div className="col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2">
                     <p className="text-sm text-gray-500">
-                        <strong>SimpleStore.tsx</strong>
-                        <br />
-                        <br />
                         We are gonna create a global state hook <strong>useCount</strong> with one line of code.
                     </p>
 

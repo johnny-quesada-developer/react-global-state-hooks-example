@@ -3,6 +3,7 @@ import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button, CodeFragment, write } from '../fixtures';
 
 const useCount = createGlobalState(0, {
+    name: 'useCountWithActions',
     localStorage: {
         key: 'count',
         encrypt: true,
