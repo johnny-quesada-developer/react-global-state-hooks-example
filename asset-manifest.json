@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-global-state-hooks-example/static/css/main.d3bc0d38.css",
-    "main.js": "/react-global-state-hooks-example/static/js/main.c5247900.js",
+    "main.js": "/react-global-state-hooks-example/static/js/main.ca5f366d.js",
     "static/css/862.be4af243.chunk.css": "/react-global-state-hooks-example/static/css/862.be4af243.chunk.css",
     "static/js/862.e5d3019c.chunk.js": "/react-global-state-hooks-example/static/js/862.e5d3019c.chunk.js",
     "static/css/402.1d78b573.chunk.css": "/react-global-state-hooks-example/static/css/402.1d78b573.chunk.css",
     "static/js/402.ce0b3c96.chunk.js": "/react-global-state-hooks-example/static/js/402.ce0b3c96.chunk.js",
     "index.html": "/react-global-state-hooks-example/index.html",
     "main.d3bc0d38.css.map": "/react-global-state-hooks-example/static/css/main.d3bc0d38.css.map",
-    "main.c5247900.js.map": "/react-global-state-hooks-example/static/js/main.c5247900.js.map",
+    "main.ca5f366d.js.map": "/react-global-state-hooks-example/static/js/main.ca5f366d.js.map",
     "862.be4af243.chunk.css.map": "/react-global-state-hooks-example/static/css/862.be4af243.chunk.css.map",
     "862.e5d3019c.chunk.js.map": "/react-global-state-hooks-example/static/js/862.e5d3019c.chunk.js.map",
     "402.1d78b573.chunk.css.map": "/react-global-state-hooks-example/static/css/402.1d78b573.chunk.css.map",
@@ -16,6 +16,6 @@
   },
   "entrypoints": [
     "static/css/main.d3bc0d38.css",
-    "static/js/main.c5247900.js"
+    "static/js/main.ca5f366d.js"
   ]
 }
