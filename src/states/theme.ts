@@ -32,7 +32,7 @@ const loadTheme = (value: string) => {
     return source.promise;
 };
 
-export const useTheme = createGlobalState('dark' as Theme, {
+export const theme = createGlobalState('dark' as Theme, {
     localStorage: {
         key: 'theme',
     },
@@ -44,18 +44,14 @@ export const useTheme = createGlobalState('dark' as Theme, {
         },
         highlight: () => {
             return async () => {
-                const [, theme] = useTheme.stateControls();
-
-                await theme.loadTheme();
+                await theme.actions.loadTheme();
 
                 prismjs.highlightAll();
             };
         },
         highlightElement: (element: HTMLElement) => {
             return async () => {
-                const [, theme] = useTheme.stateControls();
-
-                await theme.loadTheme();
+                await theme.actions.loadTheme();
 
                 prismjs.highlightElement(element, false);
             };
@@ -79,4 +75,4 @@ export const useTheme = createGlobalState('dark' as Theme, {
     },
 });
 
-export const [themeGetter, theme] = useTheme.stateControls();
+export default theme;

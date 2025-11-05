@@ -1,16 +1,14 @@
 import React from 'react';
-import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
+import createGlobalState from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button } from '../fixtures';
 import { CodeFragment, write } from '../fixtures';
 
-const useCount = createGlobalState(0, {
+const counter = createGlobalState(0, {
     name: 'useCount',
 });
 
-const [getCount, setCountDecoupled] = useCount.stateControls();
-
 const FirstComponent: React.FC = () => {
-    const [count, setState] = useCount();
+    const [count, setState] = counter.use();
     const rendersCount = useRenderCount();
 
     return (
@@ -23,7 +21,7 @@ const FirstComponent: React.FC = () => {
 };
 
 const SecondComponent: React.FC = () => {
-    const [count, setState] = useCount();
+    const [count, setState] = counter.use();
     const rendersCount = useRenderCount();
 
     return (
@@ -36,13 +34,13 @@ const SecondComponent: React.FC = () => {
 };
 
 const ThirdComponentDecoupled: React.FC = () => {
-    const count = getCount();
+    const [count] = counter.use();
     const rendersCount = useRenderCount();
 
     return (
         <StateDetails label="Decoupled Component" count={count} color="bg-blue-50" renders={rendersCount}>
             <div className="flex-1 flex">
-                <Button onClick={() => setCountDecoupled((state) => state + 1)}>Increase</Button>
+                <Button onClick={() => counter.setState((state) => state + 1)}>Increase</Button>
             </div>
         </StateDetails>
     );
@@ -116,18 +114,17 @@ export const SimpleStorage: React.FC = () => {
                 <div className="col-span-2 border-t border-t-dashed pt-2 flex flex-col gap-2">
                     <p className="text-sm text-gray-500">To get the decoupled hooks you can use something like this:</p>
                     <CodeFragment>
-                        {write("const useTheme = createGlobalState<'light' | 'dark'>('light');")
-                            .newLine(0, 'const [getTheme, setTheme] = useTheme.stateControls();')
+                        {write("const theme = createGlobalState<'light' | 'dark'>('light');")
                             .newLine(0, '')
                             .newLine(0, 'const App: React.FC = () => {')
-                            .newLine(4, 'const [theme] = useTheme();')
+                            .newLine(4, 'const [theme] = theme.use();')
                             .newLine(0, '')
                             .newLine(4, 'return <div data-theme={theme}>your app here</div>;')
                             .newLine(0, '};')
                             .newLine(0, '')
                             .newLine(0, 'const ToggleThemeButton: React.FC = () => {')
                             .newLine(4, 'return (')
-                            .newLine(8, "<button onClick={() => setTheme(theme => theme === 'light' ? 'dark' : 'light')}>")
+                            .newLine(8, "<button onClick={() => theme.actions.setTheme(theme => theme === 'light' ? 'dark' : 'light')}>")
                             .newLine(10, 'Toggle Theme')
                             .newLine(8, '</button>')
                             .newLine(4, ');')

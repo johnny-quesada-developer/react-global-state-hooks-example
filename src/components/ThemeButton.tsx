@@ -1,16 +1,16 @@
 import React from 'react';
 import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
-import { useTheme } from '../states';
+import { theme } from '../states';
 import merge from 'easy-css-merge';
 
 export const ThemeButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-    const [theme, actions] = useTheme();
+    const [themeValue] = theme.use();
 
     return (
         <button
             title="Toggle theme"
             {...props}
-            onClick={() => actions.toggle()}
+            onClick={() => theme.actions.toggle()}
             className={merge(
                 'bg-blue-500 hover:bg-blue-700',
                 'text-white font-bold',
@@ -21,7 +21,7 @@ export const ThemeButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>
             )}
         >
             <span>
-                {theme === 'light' ? (
+                {themeValue === 'light' ? (
                     <FaLightbulb className=" animate-fadeIn" fontSize={20} />
                 ) : (
                     <FaRegLightbulb className=" animate-fadeIn" fontSize={20} />

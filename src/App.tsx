@@ -1,17 +1,17 @@
 import { CustomActionsContext, SimpleContext } from './react-context';
 import { CustomActionsStore, SimpleStorage } from './react-global-state-hooks';
 import { ThemeButton } from './components';
-import { themeGetter } from './states';
 import merge from 'easy-css-merge';
+import { theme } from './states';
 
 const App = () => {
-    const theme = themeGetter();
+    const themeValue = theme.getState();
 
     return (
         <div
             className={merge('h-full pb-96 flex flex-col gap-6 animate-fadeIn', {
-                'bg-gray-100': theme === 'light',
-                'bg-gray-700': theme === 'dark',
+                'bg-gray-100': themeValue === 'light',
+                'bg-gray-700': themeValue === 'dark',
             })}
         >
             <div className="relative flex flex-col lg:grid grid-cols-1 gap-4 items-center m-auto">
@@ -19,8 +19,8 @@ const App = () => {
 
                 <h2
                     className={merge('text-2xl font-bold text-center', {
-                        'text-gray-700': theme === 'light',
-                        'text-gray-200': theme === 'dark',
+                        'text-gray-700': themeValue === 'light',
+                        'text-gray-200': themeValue === 'dark',
                     })}
                 >
                     react-global-state-hooks
@@ -32,8 +32,8 @@ const App = () => {
 
                 <h2
                     className={merge('text-2xl font-bold text-center my-10', {
-                        'text-gray-700': theme === 'light',
-                        'text-gray-200': theme === 'dark',
+                        'text-gray-700': themeValue === 'light',
+                        'text-gray-200': themeValue === 'dark',
                     })}
                 >
                     useContext

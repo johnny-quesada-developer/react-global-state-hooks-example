@@ -2,7 +2,7 @@ import React from 'react';
 import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button, CodeFragment, write } from '../fixtures';
 
-const useCount = createGlobalState(0, {
+const counter = createGlobalState(0, {
     name: 'useCountWithActions',
     localStorage: {
         key: 'count',
@@ -22,23 +22,21 @@ const useCount = createGlobalState(0, {
     },
 });
 
-const [, actions] = useCount.stateControls();
-
 const FirstComponent: React.FC = () => {
     const rendersCount = useRenderCount();
 
     return (
         <StateDetails label="Decoupled" count={null} color="bg-blue-50" renders={rendersCount}>
             <div className="flex-1 flex flex-wrap gap-3">
-                <Button onClick={actions.increase}>Increase</Button>
-                <Button onClick={actions.decrease}>Decrease</Button>
+                <Button onClick={counter.actions.increase}>Increase</Button>
+                <Button onClick={counter.actions.decrease}>Decrease</Button>
             </div>
         </StateDetails>
     );
 };
 
 const SecondComponent: React.FC = () => {
-    const [count] = useCount();
+    const [count] = counter();
     const rendersCount = useRenderCount();
 
     return <StateDetails label="Connected" count={count} color="bg-orange-50" renders={rendersCount}></StateDetails>;

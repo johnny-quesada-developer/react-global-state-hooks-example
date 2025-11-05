@@ -61,7 +61,7 @@ export const CodeFragment = React.forwardRef<CodeFragmentRef, CodeFragmentProps>
         useEffect(() => {
             if (!containerRef.current) return;
 
-            theme.highlightElement(containerRef.current.firstChild as HTMLElement);
+            theme.actions.highlightElement(containerRef.current.firstChild as HTMLElement);
         }, [children]);
 
         return (
