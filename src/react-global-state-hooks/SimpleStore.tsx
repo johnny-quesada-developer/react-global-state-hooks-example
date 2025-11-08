@@ -34,11 +34,10 @@ const SecondComponent: React.FC = () => {
 };
 
 const ThirdComponentDecoupled: React.FC = () => {
-    const [count] = counter.use();
     const rendersCount = useRenderCount();
 
     return (
-        <StateDetails label="Decoupled Component" count={count} color="bg-blue-50" renders={rendersCount}>
+        <StateDetails label="Decoupled Component" count={counter.getState()} color="bg-blue-50" renders={rendersCount}>
             <div className="flex-1 flex">
                 <Button onClick={() => counter.setState((state) => state + 1)}>Increase</Button>
             </div>
