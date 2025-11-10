@@ -49,7 +49,11 @@ const useCount4 = createGlobalState(0, {
     name: 'useCount4',
     localStorage: {
         key: 'count4',
-        encrypt: true,
+        validator: ({ restored }) => {
+            if (typeof restored !== 'number' || isNaN(restored)) {
+                throw new Error('Invalid number stored in localStorage');
+            }
+        },
     },
 });
 

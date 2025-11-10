@@ -3,7 +3,7 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
-import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
+import createGlobalState from 'react-global-state-hooks/createGlobalState';
 
 export type Theme = 'light' | 'dark';
 
@@ -35,6 +35,12 @@ const loadTheme = (value: string) => {
 export const theme = createGlobalState('dark' as Theme, {
     localStorage: {
         key: 'theme',
+        validator: ({ restored }) => {
+            const isValidTheme = ['light', 'dark'].includes(restored as string);
+            if (!isValidTheme) {
+                throw new Error('Invalid theme stored in localStorage');
+            }
+        },
     },
     actions: {
         loadTheme: () => {

@@ -1,12 +1,16 @@
 import React from 'react';
-import { createGlobalState } from 'react-global-state-hooks/createGlobalState';
+import createGlobalState from 'react-global-state-hooks/createGlobalState';
 import { useRenderCount, Container, StateDetails, Button, CodeFragment, write } from '../fixtures';
 
 const counter = createGlobalState(0, {
     name: 'useCountWithActions',
     localStorage: {
         key: 'count',
-        encrypt: true,
+        validator: ({ restored }) => {
+            if (typeof restored !== 'number' || isNaN(restored)) {
+                throw new Error('Invalid number stored in localStorage');
+            }
+        },
     },
     actions: {
         increase() {
